@@ -26,21 +26,21 @@ export class TaskController {
     @Get(':id')
     @ApiOperation({ summary: 'Get task by ID' })
     @ApiResponse({ status: 200, description: 'Return task by ID.' })
-    getTaskById(@Param('id') id: number) {
+    getTaskById(@Param('id') id: string) {
         return this.taskService.getOne(id);
     }
 
     @Put(':id')
     @ApiOperation({ summary: 'Edit task by ID' })
     @ApiResponse({ status: 200, description: 'Return task by ID.' })
-    updateTaskById(@Param('id') id: number, @Body() obj: CreateTaskDTO) {
+    updateTaskById(@Param('id') id: string, @Body() obj: CreateTaskDTO) {
         return this.taskService.update(id, obj);
     }
 
     @Delete(':id')
     @ApiOperation({ summary: 'Delete task by ID' })
     @ApiResponse({ status: 200, description: 'Delete task by ID.' })
-    deleteTaskById(@Param('id') id: number) {
+    deleteTaskById(@Param('id') id: string) {
         return this.taskService.deleteTaskById(id);
     }
 }

@@ -21,7 +21,7 @@ export class TaskService {
         return this.repo.find()
     }
 
-    async getOne(id: number) {
+    async getOne(id: string) {
         const task = this.repo.findOneBy({id});
         if (!task) {
             throw new NotFoundException(`Task with ID ${id} not found`)
@@ -29,7 +29,7 @@ export class TaskService {
         return task;
     }
 
-    async update(id: number, newTitle: CreateTaskDTO) {
+    async update(id: string, newTitle: CreateTaskDTO) {
         let obj = await this.repo.findOneBy({id});
         if (!obj) {
             throw new NotFoundException(`Task with ID ${id} not found`)
@@ -40,7 +40,7 @@ export class TaskService {
         return obj;
     }
 
-    async deleteTaskById(id: number) {
+    async deleteTaskById(id: string) {
         await this.repo.delete(id);
         return `Task with ID ${id} deleted successfully`;
     }

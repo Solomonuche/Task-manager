@@ -1,3 +1,4 @@
+import { Base } from "src/entities/base.entity";
 import { 
     Entity,
     PrimaryGeneratedColumn,
@@ -7,17 +8,8 @@ import {
 } from "typeorm";
 
 @Entity()
-export class Todo {
-    @PrimaryGeneratedColumn()
-    id: number;
-
+export class Todo extends Base {
     @Column({nullable: false})
     task: string;
-
-    @CreateDateColumn()
-    created_at: string;
-    
-    @UpdateDateColumn()
-    updated_at: string;
 
 }
