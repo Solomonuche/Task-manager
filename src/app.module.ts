@@ -8,11 +8,13 @@ import { Todo } from './task/entities/task.entity';
 import { UsersModule } from './users/users.module';
 import { Users } from './users/entites/user.entity';
 import { AuthModule } from './auth/auth.module';
+import { validationSchema } from './config/validation.schema';
 
 @Module({
   imports: [ 
   ConfigModule.forRoot({
-      isGlobal: true
+      isGlobal: true,
+      validationSchema,
   }),
   TypeOrmModule.forRootAsync({
     imports: [ ConfigModule ],
