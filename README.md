@@ -1,6 +1,15 @@
-# NestJS Task manager App
+# Task Management API
+This is a NestJS-based API for managing tasks. The application allows users to create, retrieve, update, and delete tasks, ensuring that each task is associated with a specific authenticated user.
 
-This is a simple Todo application built with NestJS and TypeORM, using PostgreSQL as the database. The application supports basic CRUD operations for managing todo tasks.
+## Features
+- User Authentication: Ensures that all tasks are tied to a specific user.
+- CRUD Operations on Tasks:
+- - Create a Task: Allows an authenticated user to create a task.
+- - Retrieve Tasks: Users can retrieve all their tasks or a specific task by its ID.
+- - Update a Task: Users can update the title of a task.
+- - Delete a Task: Users can delete a task by its ID.
+- User Management:
+- - Get User with Tasks: Retrieve user details along with all associated tasks.
 
 ## Table of Contents
 

@@ -10,7 +10,10 @@ export class UserService {
     constructor(@InjectRepository(Users) private repo: Repository<Users>) {}
     
     async getUser(id: string) {
-        const user = await this.repo.findOneBy({ id });
+        const user = await this.repo.findOne({
+            where: { id },
+            relations: ['tasks'],
+        });
         if (!user) {
             throw new NotFoundException("User not found");
         }

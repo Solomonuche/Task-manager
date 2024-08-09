@@ -4,7 +4,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Todo } from '../entities/task.entity';
 import { CreateTaskDTO, TaskResponse } from '../dto/task.dto';
 
-
 @Injectable()
 export class TaskService {
     constructor(
@@ -12,25 +11,40 @@ export class TaskService {
         private repo: Repository<Todo>
     ) {}
 
-    create(createTaskDTO: CreateTaskDTO) {
+    create(createTaskDTO: CreateTaskDTO, req: any) {
         const task = this.repo.create(createTaskDTO);
+        task.user = req.user.sub;
         return this.repo.save(task);
     }
 
-    getAll() {
-        return this.repo.find()
+    getAll(req: any) {
+        return this.repo.find({
+            where: {
+                user: { id: req.user.sub }
+            }
+        })
     }
 
-    async getOne(id: string) {
-        const task = this.repo.findOneBy({id});
+    async getOne(id: string, req: any) {
+        const task = await this.repo.findOneBy(
+            {
+                id,
+                user: { id: req.user.sub },                
+            }
+        );
         if (!task) {
             throw new NotFoundException(`Task with ID ${id} not found`)
         }
         return task;
     }
 
-    async update(id: string, newTitle: CreateTaskDTO) {
-        let obj = await this.repo.findOneBy({id});
+    async update(id: string, newTitle: CreateTaskDTO, req: any) {
+        let obj = await this.repo.findOneBy(
+            {
+                id,
+                user: { id: req.user.sub },
+            }
+        );
         if (!obj) {
             throw new NotFoundException(`Task with ID ${id} not found`)
         }
@@ -40,8 +54,13 @@ export class TaskService {
         return obj;
     }
 
-    async deleteTaskById(id: string) {
-        await this.repo.delete(id);
+    async deleteTaskById(id: string, req: any) {
+        await this.repo.delete(
+            {
+                id,
+                user: { id: req.user.sub },
+            }
+        );
         return `Task with ID ${id} deleted successfully`;
     }
 }
