@@ -1,5 +1,5 @@
-import { Controller, Get } from '@nestjs/common';
-import { ApiTags, ApiOperation } from '@nestjs/swagger';
+import { Controller, Get, Request, UseGuards } from '@nestjs/common';
+import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 import { UserService } from '../service/user.service';
 
 @Controller('users')
@@ -7,9 +7,11 @@ import { UserService } from '../service/user.service';
 export class UserController { 
     constructor(private userService: UserService) {}
 
-    @ApiOperation({ summary: "Get user's details"})
+    @ApiBearerAuth()
+    @ApiOperation({ summary: "Get current user's details"})
     @Get('me')
-    userDetails(id: string) {
-        return this.userService.getUser(id)
+    async currentUser(@Request() req) {
+        const user = await this.userService.getUser(req.user['sub']);
+        return user;
     }
 }
