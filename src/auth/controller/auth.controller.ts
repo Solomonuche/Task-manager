@@ -2,9 +2,10 @@ import { Body, Controller, Post, Get, UsePipes, ValidationPipe, UseInterceptors,
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CreateUserDto, LoginDto } from 'src/users/dto/users.dto';
 import { AuthService } from '../service/auth.service';
+import { SkipAuth } from 'src/decorators/skipAuth.decorator';
 
 @UsePipes(ValidationPipe)
-@UseInterceptors(ClassSerializerInterceptor)
+@SkipAuth()
 @Controller('auth')
 @ApiTags("Auth")
 export class AuthController {
