@@ -1,9 +1,10 @@
 import { Controller, Get, Post, Body, ValidationPipe, UsePipes, Param, Put, Delete } from '@nestjs/common';
 import { CreateTaskDTO } from '../dto/task.dto';
 import { TaskService } from '../services/task.service';
-import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
 
 @ApiTags('Tasks')
+@ApiBearerAuth()
 @Controller('tasks')
 export class TaskController {
     constructor(private taskService: TaskService) {}
